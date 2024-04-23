@@ -1,0 +1,58 @@
+Query con Select: 
+
+1. 	SELECT `name`, `surname`, `date_of_birth`
+	FROM `students`
+	WHERE YEAR(`date_of_birth`) = 1990;
+
+2. 	SELECT * 
+	FROM `courses`
+	WHERE `cfu` > 10;
+
+3. 	SELECT `name`, `surname`, YEAR(`date_of_birth`)
+	FROM `students`
+	WHERE DATEDIFF(CURDATE(), `date_of_birth`) / 365 > 30;
+
+4.	SELECT * 
+	FROM `courses` 
+	WHERE `year` = 1
+	AND `period` = 'I semestre';
+
+5.	SELECT *
+	FROM `exams` 
+	WHERE `date` = '2020-06-20'
+	AND `hour` > '14:00';
+
+6.	SELECT * 
+	FROM `degrees` 
+	WHERE `level` = 'magistrale';
+
+7.	SELECT COUNT(*)
+	FROM `departments`;
+
+8.	SELECT COUNT(*) 
+	FROM `teachers` 
+	WHERE `phone` IS NULL;
+
+Query con GROUP BY:
+
+1.	SELECT YEAR(`enrolment_date`), COUNT(*)
+	FROM `students`
+	GROUP BY YEAR(`enrolment_date`)
+	ORDER BY YEAR(`enrolment_date`);
+
+
+2.	SELECT COUNT(*) 
+	FROM `teachers` 
+	GROUP BY `id` = `office_address`, `office_number`;
+
+3. 	SELECT AVG(`vote`)
+	FROM `exam_student` 
+	GROUP BY `exam_id`;
+
+4.	SELECT COUNT(`name`) AS `corsi_di_laurea`
+	FROM `departments` 
+	GROUP BY `name`;
+
+5.	SELECT COUNT(`name`)
+	FROM `degrees` 
+	GROUP BY `department_id`;
