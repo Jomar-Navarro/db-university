@@ -1,0 +1,51 @@
+JOIN
+
+1. 	SELECT `students` . `name`, `students` . `surname`, `degrees` . `name`
+	FROM `degrees`
+	INNER JOIN `students` ON `degrees` . `id` = `students` . `degree_id`
+	WHERE `degrees` . `name` LIKE '%economia%';
+
+2.	SELECT `degrees` . `name`, `departments` . `name`, `degrees` . `level`
+	FROM `degrees` 
+	INNER JOIN `departments` ON `departments` . `id` = `degrees` . `department_id`
+	WHERE `degrees` . `level` = 'Magistrale'
+	AND `departments` . `name` = 'Dipartimento di Neuroscienze';
+
+3. 	SELECT 	`teachers` . `name`,
+	   	`teachers` . `surname`,
+       	   	`teachers` . `id`,
+       	   	`courses` . `name`,
+           	`degrees` . `name`
+	FROM `teachers` 
+	INNER JOIN `course_teacher` ON `teachers` . `id` = `course_teacher` . `teacher_id`
+	INNER JOIN `courses` ON `course_teacher` . `course_id` = `courses` . `id`
+	INNER JOIN `degrees` ON `courses` . `degree_id` = `degrees` . `id`
+	WHERE `teachers` . `id` = 44;
+
+4.	SELECT 	`students` . `name` AS `Nome`,
+		`students` . `surname` AS `Cognome`,
+        	`degrees` . `name`,
+        	`departments` . `name`
+	FROM `students`
+	INNER JOIN `degrees` ON `students` . `degree_id` = `degrees` . `id`
+	INNER JOIN `departments` ON `degrees` . `department_id` = `departments` . `id`
+	ORDER BY `students` . `name`, `students` . `surname`;
+
+5.	SELECT 	`degrees` . `name` AS `Corso di Laurea`,
+		`courses` . `name` AS `Corso`,
+        	`teachers` . `name` AS `Nome`,
+        	`teachers` . `surname` AS `Cognome`
+	FROM `degrees` 
+	INNER JOIN `courses` ON `degrees` . `id` = `courses` . `degree_id`
+	INNER JOIN `course_teacher` ON `courses` . `id` = `course_teacher` . `course_id`
+	INNER JOIN `teachers` ON `course_teacher` . `teacher_id` = `teachers` . `id`;
+
+6.	SELECT 	`teachers` . `name`,
+		`teachers` . `surname`
+	FROM `teachers`
+	INNER JOIN `course_teacher`  ON `teachers` . `id` = `course_teacher` . `teacher_id`
+	INNER JOIN `courses` ON `course_teacher` . `course_id` = `courses` . `id`
+	INNER JOIN `degrees` ON `courses` . `degree_id` = `degrees` . `id`
+	INNER JOIN `departments` ON `degrees` . `department_id` = `departments` . `id`
+	WHERE `departments` . `name` = 'Dipartimento di Matematica'
+	ORDER BY `teachers` . `name`, `teachers` . `surname`;

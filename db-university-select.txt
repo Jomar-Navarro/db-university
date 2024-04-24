@@ -1,0 +1,111 @@
+Query con Select: 
+
+1. 	SELECT `name`, `surname`, `date_of_birth`
+	FROM `students`
+	WHERE YEAR(`date_of_birth`) = 1990;
+
+2. 	SELECT * 
+	FROM `courses`
+	WHERE `cfu` > 10;
+
+3. 	SELECT `name`, `surname`, YEAR(`date_of_birth`)
+	FROM `students`
+	WHERE DATEDIFF(CURDATE(), `date_of_birth`) / 365 > 30;
+
+4.	SELECT * 
+	FROM `courses` 
+	WHERE `year` = 1
+	AND `period` = 'I semestre';
+
+5.	SELECT *
+	FROM `exams` 
+	WHERE `date` = '2020-06-20'
+	AND `hour` > '14:00';
+
+6.	SELECT * 
+	FROM `degrees` 
+	WHERE `level` = 'magistrale';
+
+7.	SELECT COUNT(*)
+	FROM `departments`;
+
+8.	SELECT COUNT(*) 
+	FROM `teachers` 
+	WHERE `phone` IS NULL;
+
+Query con GROUP BY:
+
+1.	SELECT YEAR(`enrolment_date`), COUNT(*)
+	FROM `students`
+	GROUP BY YEAR(`enrolment_date`)
+	ORDER BY YEAR(`enrolment_date`);
+
+
+2.	SELECT COUNT(*) 
+	FROM `teachers` 
+	GROUP BY `id` = `office_address`, `office_number`;
+
+3. 	SELECT AVG(`vote`)
+	FROM `exam_student` 
+	GROUP BY `exam_id`;
+
+4.	SELECT COUNT(`name`) AS `corsi_di_laurea`
+	FROM `departments` 
+	GROUP BY `name`;
+
+5.	SELECT COUNT(`name`)
+	FROM `degrees` 
+	GROUP BY `department_id`;
+
+
+JOIN
+
+1.	SELECT `departments`.*
+	FROM `degrees`
+	INNER JOIN `departments` ON `departments`.`id` = `degrees`.`department_id`
+	WHERE `degrees`.`name` = 'Corso di laurea in diritto dell\'economia'
+
+2. SELECT
+    `courses`.`name`,
+    `courses`.`period`,
+    `courses`.`cfu`,
+    `exams`.`date`,
+    `exams`.`hour`,
+    `exams`.`location`
+FROM
+    `degrees`
+INNER JOIN `courses` ON `degrees`.`id` = `courses`.`degree_id`
+INNER JOIN `exams` ON `courses`.`id` = `exams`.`course_id`
+WHERE
+    `degrees`.`name` = 'Corso di laurea magistrale in fisica' AND `courses`.`year` = 1
+
+3.  	SELECT
+    	`courses`.`id` AS `corso_id`,
+    	`courses`.`degree_id`,
+    	`courses`.`name`,
+    	`courses`.`description`,
+    	`courses`.`period`,
+    	`courses`.`year`,
+    	`courses`.`cfu`,
+   	`exams`.`id` AS `esame_id`,
+   	`exams`.`date`,
+    	`exams`.`location`,
+    	`exams`.`hour`
+	FROM `courses`
+	INNER JOIN `exams`ON `courses`.`id`= `exams`.`course_id`
+	WHERE `courses`.`id`=144
+
+4.	SELECT
+    		`students`.`name`,
+    		`students`.`surname`,
+    		`students`.`registration_number`,
+    		`courses`.`name`,
+    		`courses`.`cfu`,
+    		`exams`.`date`,
+    		`exam_student`.`vote`
+	FROM`students`
+	INNER JOIN `exam_student` ON `students`.`id` = `exam_student`.`student_id`
+	INNER JOIN `exams` ON `exams`.`id` = `exam_student`.`exam_id`
+	INNER JOIN `courses` ON `courses`.`id` = `exams`.`course_id`
+	WHERE `students`.`name` = 'Mirco' AND `students`.`surname` = 'Messina' AND `exam_student`.`vote` >= '18'
+	ORDER BY `exams`.`date`
